@@ -60,6 +60,24 @@ class Trie(object):
                 stack.append(p)
         return ret
 
+    def smallest__subset_prefix(self):
+        """
+        Find the smallest subset of the dictionary, which contains prefixes of all words in the dictionary
+        :return: a list of strings
+        """
+        ret = []
+        # DFS
+        stack = [self.root]
+        while stack:
+            node = stack.pop()
+            if node.word is not None:
+                ret.append(node.word)
+            else:
+                for p in node.children.values():
+                    stack.append(p)
+
+        return ret
+
 
 if __name__ == "__main__":
     t = Trie()
@@ -68,5 +86,11 @@ if __name__ == "__main__":
     t.add_string("foot")
     t.add_string("zzzdevil")
 
-    print("Start with 'f': %s" % t.start_with('f'))
-    print(t.find("food"))
+    print("==== Find all strings start with the given prefix ===")
+    prefix = "f"
+    print("Prefix: %s" % prefix)
+    print("Result: %s" % t.start_with('f'))
+    print()
+
+    print("==== Find smallest subset contains prefixes of all words ===")
+    print("Result: %s" % t.smallest__subset_prefix())
